@@ -1,10 +1,11 @@
 from django.shortcuts import render, redirect
+from django.urls import reverse  # Don't forget to import reverse
 from .forms import EmployeeForm
 from .models import Employee  # Import Employee model
 
 # Display all employees
 def employee_list(request):
-    context = {'employee_list': Employee.objects.all()}
+    context =   Employee.objects.all()
     return render(request, "register/employee_list.html", context)
 
 # Create or update employee form
@@ -26,15 +27,14 @@ def employee_form(request, id=0):
 
         if form.is_valid():
             form.save()
-            return redirect('/employee/list')
+        return redirect(reverse('employee_list'))
 
 # Delete employee
 def employee_delete(request, id):
     employee = Employee.objects.get(pk=id)
     employee.delete()
-    return redirect('/employee/list')
-# views.py
-from django.shortcuts import render
+    return redirect(reverse('employee_list'))
 
-def employee_view(request):
-    return render(request, 'employee/employee.html')
+# Optionally, delete the commented-out employee_view function if you're not using it
+# def employee_view(request):
+#     return render(request, 'employee/employee_list.html')

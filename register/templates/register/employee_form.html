@@ -4,25 +4,34 @@
 <form action="" method="post">
     {% csrf_token %}
 
+    {% if form.errors %}
+        <div class="alert alert-danger">
+            <strong>There were some errors in the form:</strong>
+            <ul>
+                {% for field in form %}
+                    {% for error in field.errors %}
+                        <li>{{ error }}</li>
+                    {% endfor %}
+                {% endfor %}
+            </ul>
+        </div>
+    {% endif %}
+
     <div class="form-group">
-        {{ form.fullname|as_crispy_field }}
+        {{ form.fullname }}
     </div>
     
     <div class="form-group">
-        {{ form.mobile|as_crispy_field }}
+        {{ form.mobile}}
     </div>
     
     <div class="row">
         <div class="col-md-4">
             <div class="form-group">
-                {{ form.emp_code|as_crispy_field }}
+                {{ form.emp_code }}
             </div>
         </div>
-        <div class="col-md-4">
-            <div class="form-group">
-                {{ form.position|as_crispy_field }}
-            </div>
-        </div>
+        
     </div>
     
     <div class="row">
